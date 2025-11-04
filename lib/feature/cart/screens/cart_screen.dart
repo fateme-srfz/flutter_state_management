@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_state_management/feature/product/models/product.dart';
+import 'package:flutter_state_management/providers/product_provider.dart';
+import 'package:provider/provider.dart';
 
 class CartScreen extends StatelessWidget {
-  final List<Product> cartItems;
-  const CartScreen({super.key, required this.cartItems});
+  const CartScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final cartItems = Provider.of<ProduvtProvider>(context).selectedProduct;
     return Scaffold(
       appBar: AppBar(title: Text('Cart')),
       body: cartItems.isEmpty

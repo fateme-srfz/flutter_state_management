@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_state_management/feature/cart/screens/cart_screen.dart';
-import 'package:flutter_state_management/feature/product/constants/product_constant.dart';
-import 'package:flutter_state_management/feature/product/widgets/product_tile.dart';
 
-class ProductScreen extends StatefulWidget {
+import 'package:flutter_state_management/feature/product/widgets/product_tile.dart';
+import 'package:flutter_state_management/providers/product_provider.dart';
+import 'package:provider/provider.dart';
+
+class ProductScreen extends StatelessWidget {
   const ProductScreen({super.key});
 
-  @override
-  State<ProductScreen> createState() => _ProductScreenState();
-}
-
-class _ProductScreenState extends State<ProductScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,11 +19,7 @@ class _ProductScreenState extends State<ProductScreen> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (_) => CartScreen(
-                    cartItems: productlist
-                        .where((product) => product.isSelected)
-                        .toList(),
-                  ),
+                  builder: (_) => CartScreen(),
                 ),
               );
             },
@@ -34,16 +27,18 @@ class _ProductScreenState extends State<ProductScreen> {
           ),
         ],
       ),
-      body: ListView.builder(
-        itemCount: productlist.length,
-        itemBuilder: (context, index) {
-          final product = productlist[index];
-          return ProductTile(
-            product: product,
-            onchanged: (value) {
-              setState(() {
-                product.isSelected = value ?? false;
-              });
+      body: Consumer<ProduvtProvider>(
+        builder: (context, productprovider, child) {
+          return ListView.builder(
+            itemCount: productprovider.products.length,
+            itemBuilder: (context, index) {
+              final product = productprovider.products[index];
+              return ProductTile(
+                product: product,
+                onchanged: (value) {
+                  productprovider.toggleProductSelection(product);
+                },
+              );
             },
           );
         },
