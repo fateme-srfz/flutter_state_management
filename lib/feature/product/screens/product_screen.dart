@@ -27,18 +27,14 @@ class ProductScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Consumer<ProduvtProvider>(
-        builder: (context, productprovider, child) {
-          return ListView.builder(
-            itemCount: productprovider.products.length,
-            itemBuilder: (context, index) {
-              final product = productprovider.products[index];
-              return ProductTile(
-                product: product,
-                onchanged: (value) {
-                  productprovider.toggleProductSelection(product);
-                },
-              );
+      body: ListView.builder(
+        itemCount: context.watch<ProduvtProvider>().products.length,
+        itemBuilder: (context, index) {
+          final product = context.watch<ProduvtProvider>().products[index];
+          return ProductTile(
+            product: product,
+            onchanged: (value) {
+              context.read<ProduvtProvider>().toggleProductSelection(product);
             },
           );
         },
