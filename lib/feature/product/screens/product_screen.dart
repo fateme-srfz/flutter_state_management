@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_state_management/feature/cart/screens/cart_screen.dart';
 
 import 'package:flutter_state_management/feature/product/widgets/product_tile.dart';
-import 'package:flutter_state_management/providers/product_provider.dart';
+import 'package:flutter_state_management/notifier/product_notifier.dart';
 import 'package:provider/provider.dart';
 
 class ProductScreen extends StatelessWidget {

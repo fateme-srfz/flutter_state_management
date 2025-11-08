@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_state_management/providers/product_provider.dart';
+import 'package:flutter_state_management/notifier/product_notifier.dart';
 import 'package:provider/provider.dart';
 
 class CartScreen extends StatelessWidget {
