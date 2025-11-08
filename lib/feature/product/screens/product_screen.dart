@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_state_management/feature/cart/screens/cart_screen.dart';
-
 import 'package:flutter_state_management/feature/product/widgets/product_tile.dart';
 import 'package:flutter_state_management/notifier/product_notifier.dart';
-import 'package:provider/provider.dart';
 
-class ProductScreen extends StatelessWidget {
+class ProductScreen extends ConsumerWidget {
   const ProductScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Products'),
@@ -18,9 +17,7 @@ class ProductScreen extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                  builder: (_) => CartScreen(),
-                ),
+                MaterialPageRoute(builder: (_) => CartScreen()),
               );
             },
             icon: Icon(Icons.shopping_cart),
@@ -28,13 +25,13 @@ class ProductScreen extends StatelessWidget {
         ],
       ),
       body: ListView.builder(
-        itemCount: context.watch<ProduvtProvider>().products.length,
+        itemCount: ref.watch(productNotifier).length,
         itemBuilder: (context, index) {
-          final product = context.watch<ProduvtProvider>().products[index];
+          final product = ref.watch(productNotifier)[index];
           return ProductTile(
             product: product,
             onchanged: (value) {
-              context.read<ProduvtProvider>().toggleProductSelection(product);
+              ref.read(productNotifier.notifier).toggleProductSelected(product);
             },
           );
         },
